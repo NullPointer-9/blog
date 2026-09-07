@@ -1,9 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
@@ -14,112 +12,150 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const fmtDate = (d: Date) =>
+	d
+		.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+		.toUpperCase()
+		.replace(', ', '.')
+		.replace(/ /g, '.');
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			.lead {
-				font-size: 1.125rem;
-				color: rgb(var(--gray));
-				text-align: center;
-				margin-bottom: 2rem;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<p class="lead">{SITE_DESCRIPTION}</p>
+			<section class="bio">
+				<img class="avatar" src={`${base}favicon.svg`} alt="" width="96" height="96" />
+				<div>
+					<h1>NullPointer-9</h1>
+					<p class="role">Desenvolvedor Web</p>
+					<p class="tagline">{SITE_DESCRIPTION}</p>
+				</div>
+			</section>
 			<section>
-				<ul>
+				<h2 class="section-title">Posts recentes</h2>
+				<ul class="posts">
 					{
 						posts.map((post) => (
 							<li>
 								<a href={`${base}${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+									<time datetime={post.data.pubDate.toISOString()}>
+										{fmtDate(post.data.pubDate)}
+									</time>
+									<span class="title">{post.data.title}</span>
 								</a>
 							</li>
 						))
 					}
 				</ul>
 			</section>
+			<p class="feed">
+				<a href={`${base}rss.xml`}>Assinar RSS &rarr;</a>
+			</p>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		width: 720px;
+	}
+	.bio {
+		display: flex;
+		align-items: center;
+		gap: 1.5em;
+		margin: 0.5em 0 3em;
+	}
+	.avatar {
+		width: 96px;
+		height: 96px;
+		flex-shrink: 0;
+		border-radius: 999px;
+		box-shadow: var(--box-shadow);
+	}
+	.bio h1 {
+		margin: 0 0 0.15em;
+		font-size: 2.2rem;
+	}
+	.role {
+		margin: 0 0 0.25em;
+		font-size: 0.9rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent);
+		font-weight: 600;
+	}
+	.tagline {
+		margin: 0;
+		color: rgb(var(--gray));
+	}
+	.section-title {
+		margin: 0 0 0.5em;
+		font-size: 1.4rem;
+	}
+	.posts {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.posts li {
+		border-bottom: 1px solid var(--border);
+	}
+	.posts li:last-child {
+		border-bottom: none;
+	}
+	.posts a {
+		display: flex;
+		align-items: baseline;
+		gap: 1.5em;
+		padding: 0.9em 0.2em;
+		text-decoration: none;
+		color: rgb(var(--black));
+		transition: 0.15s ease;
+	}
+	.posts a:hover {
+		color: var(--accent);
+	}
+	.posts time {
+		flex-shrink: 0;
+		width: 7.5em;
+		font-size: 0.72rem;
+		letter-spacing: 0.05em;
+		color: rgb(var(--gray));
+	}
+	.posts a:hover time {
+		color: var(--accent);
+	}
+	.posts .title {
+		font-size: 1.05rem;
+		font-weight: 600;
+	}
+	.feed {
+		margin-top: 2em;
+	}
+	.feed a {
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+	.feed a:hover {
+		text-decoration: underline;
+	}
+	@media (max-width: 720px) {
+		.bio {
+			flex-direction: column;
+			text-align: center;
+			gap: 0.75em;
+		}
+		.posts a {
+			flex-direction: column;
+			gap: 0.15em;
+			padding: 1em 0.2em;
+		}
+	}
+</style>

@@ -1,0 +1,57 @@
+---
+---
+
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema (Light / Dark / Auto)">
+	<span data-theme-label>Auto</span>
+</button>
+
+<script>
+	const order = ['light', 'dark', 'auto'];
+	const btns = document.querySelectorAll('[data-theme-toggle]');
+	const set = (t) => {
+		const dark =
+			t === 'dark' ||
+			(t === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+		document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+		document.documentElement.dataset.pref = t;
+		localStorage.setItem('theme', t);
+	};
+	const refresh = () => {
+		const current = document.documentElement.dataset.pref || 'auto';
+		btns.forEach((btn) => {
+			btn.querySelector('[data-theme-label]').textContent =
+				current.charAt(0).toUpperCase() + current.slice(1);
+		});
+	};
+	btns.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const current = document.documentElement.dataset.pref || 'auto';
+			const next = order[(order.indexOf(current) + 1) % order.length];
+			set(next);
+			refresh();
+		});
+	});
+	refresh();
+</script>
+
+<style>
+	.theme-toggle {
+		margin-left: 0.5em;
+		padding: 0.3em 0.7em;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		background: transparent;
+		color: rgb(var(--gray));
+		font-family: inherit;
+		font-size: 0.7rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		text-decoration: none;
+		cursor: pointer;
+		transition: 0.2s ease;
+	}
+	.theme-toggle:hover {
+		color: rgb(var(--gray-dark));
+		border-color: rgb(var(--gray));
+	}
+</style>
