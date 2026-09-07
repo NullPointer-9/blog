@@ -1,0 +1,34 @@
+---
+import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="Sobre mim"
+	description="Quem sou eu e sobre o que escrevo neste blog"
+	pubDate={new Date('Sep 07 2026')}
+	heroImage={AboutHeroImage}
+>
+	<p>
+		Olá! Sou o <strong>NullPointer-9</strong>, desenvolvedor e entusiasta de tecnologia. Criei este
+		blog para compartilhar o que aprendo no dia a dia: programação, novas ferramentas, projetos
+		pessoais e alguns devaneios sobre tecnologia.
+	</p>
+
+	<p>
+		Neste espaço você vai encontrar posts sobre desenvolvimento de software, boas práticas, automação
+		e tudo mais que eu achar interessante colocar para fora da minha cabeça.
+	</p>
+
+	<p>
+		O blog roda em cima de tecnologias simples e abertas: <strong>Astro</strong> para gerar as
+		páginas, <strong>Markdown</strong> para escrever o conteúdo e o <strong>GitHub Pages</strong>
+		para servir o site de graça. Se você quiser saber como este blog foi montado, dê uma olhada no
+		post <em>Como este blog foi construído</em>.
+	</p>
+
+	<p>
+		Se quiser conversar ou trocar uma ideia, pode me encontrar no GitHub:{' '}
+		<a href="https://github.com/NullPointer-9">@NullPointer-9</a>.
+	</p>
+</Layout>

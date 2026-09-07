@@ -1,0 +1,32 @@
+---
+title: 'Usando MDX'
+description: 'Um exemplo de como usar MDX no blog.'
+pubDate: 'Jun 01 2024'
+heroImage: '../../assets/blog-placeholder-5.jpg'
+---
+
+O Astro vem com a integração [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/)
+já instalada no `astro.config.mjs`. Isso permite misturar Markdown com componentes dentro dos posts.
+
+## Por que usar MDX?
+
+O MDX é um "Markdown com poderes": você consegue embutir <abbr title="JavaScript">JS</abbr> e JSX
+no conteúdo. Isso abre espaço para componentes interativos, como botões, gráficos e alertas, direto
+dentro de um post.
+
+## Exemplo
+
+Aqui está como importar e usar um componente dentro de um post MDX:
+
+import HeaderLink from '../../components/HeaderLink.astro';
+
+<HeaderLink href="https://github.com/NullPointer-9">
+	Link para o meu GitHub
+</HeaderLink>
+
+## Documentação
+
+Para saber mais sobre MDX e Astro:
+
+- [Sintaxe de MDX](https://mdxjs.com/docs/what-is-mdx)
+- [MDX no Astro](https://docs.astro.build/en/basics/astro-pages/#markdownmdx-pages)
