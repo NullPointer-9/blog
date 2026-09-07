@@ -2,12 +2,12 @@
 
 Blog pessoal construído com [Astro](https://astro.build), publicado de graça no GitHub Pages.
 
-URL publicada: **https://nullpointer-9.github.io/blog/**
+URL publicada: **https://vrcardoso.com.br**
 
 ## Recursos
 
 - ✅ Blog em Markdown/MDX com Content Collections (validação de schema)
-- ✅ Feed RSS em `/blog/rss.xml`
+- ✅ Feed RSS em `/rss.xml`
 - ✅ Sitemap automático
 - ✅ SEO: URLs canônicas e Open Graph
 - ✅ Deploy automático via GitHub Actions
@@ -49,8 +49,25 @@ O dev server ajuda com o comando `astro dev` (veja `AGENTS.md` para o modo backg
 3. No GitHub, vá em **Settings → Pages** e em **Build and deployment** selecione **GitHub Actions**
    (o workflow `.github/workflows/deploy.yml` faz todo o resto).
 
-4. Aguarde a Action terminar. O site estará em:
-   `https://nullpointer-9.github.io/blog/`
+4. Aguarde a Action terminar. O site estará no GitHub Pages em `https://nullpointer-9.github.io/blog/`.
+
+## Domínio próprio: vrcardoso.com.br
+
+O projeto já está pronto para servir em `https://vrcardoso.com.br`:
+
+- `public/CNAME` contém `vrcardoso.com.br`
+- `astro.config.mjs` usa `site: 'https://vrcardoso.com.br'` (sem `base`)
+
+No Registro.br, aponte o domínio (registros **A**) para os IPs do GitHub Pages:
+
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+Depois, em **Settings → Pages**, coloque `vrcardoso.com.br` no campo **Custom domain** e salve. O GitHub valida e emite o certificado TLS automaticamente.
 
 ## Escrevendo um post
 
@@ -66,16 +83,6 @@ heroImage: '../../assets/minha-imagem.jpg' # opcional
 ```
 
 Faça o commit e push — o deploy acontece sozinho.
-
-## Usando um domínio próprio (futuro)
-
-Se um dia apontar um domínio próprio para o GitHub Pages:
-
-1. Atualize `site` no `astro.config.mjs` para `https://seu-dominio.com`.
-2. Remova o `base: '/blog'` do `astro.config.mjs`.
-3. Ajuste os links internos que usam `import.meta.env.BASE_URL` para retirar o prefixo.
-4. Configure o domínio em **Settings → Pages** e o CNAME. Consulte
-   [como configurar um domínio personalizado no GitHub Pages](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site).
 
 ## Estrutura do projeto
 
