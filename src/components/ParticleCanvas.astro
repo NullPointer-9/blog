@@ -50,8 +50,8 @@
 			w = window.innerWidth;
 			h = window.innerHeight;
 			const dpr = Math.min(window.devicePixelRatio || 1, 2);
-			canvas.width = w * dpr;
-			canvas.height = h * dpr;
+			canvas.width = Math.round(w * dpr);
+			canvas.height = Math.round(h * dpr);
 			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 			makeParticles();
 		};
@@ -156,8 +156,11 @@
 			draw();
 		} else {
 			window.addEventListener('resize', resize);
-			window.addEventListener('mousemove', onMove);
-			window.addEventListener('mouseout', onLeave);
+			window.addEventListener('pointermove', onMove, { passive: true });
+			document.documentElement.addEventListener('mouseleave', onLeave);
+			document.addEventListener('visibilitychange', () => {
+				if (document.hidden) onLeave();
+			});
 			frame();
 		}
 	})();
