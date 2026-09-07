@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import ParticleCanvas from '../components/ParticleCanvas.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const base = import.meta.env.BASE_URL.endsWith('/')
@@ -27,14 +28,18 @@ const fmtDate = (d: Date) =>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
+		<ParticleCanvas />
 		<Header />
 		<main>
 			<section class="bio">
 				<img class="avatar" src={`${base}favicon.svg`} alt="" width="96" height="96" />
-				<div>
-					<h1>NullPointer-9</h1>
+				<div class="intro">
+					<h1 class="title text-gradient">NullPointer-9</h1>
 					<p class="role">Desenvolvedor Web</p>
 					<p class="tagline">{SITE_DESCRIPTION}</p>
+					<p class="term">
+						<span class="cmd">$</span> echo &quot;olá, universo&quot;
+					</p>
 				</div>
 			</section>
 			<section>
@@ -64,36 +69,57 @@ const fmtDate = (d: Date) =>
 
 <style>
 	main {
+		position: relative;
 		width: 720px;
 	}
 	.bio {
 		display: flex;
 		align-items: center;
-		gap: 1.5em;
-		margin: 0.5em 0 3em;
+		gap: 1.75em;
+		margin: 1.5em 0 3.5em;
+		animation: fadeUp 0.7s ease both;
 	}
 	.avatar {
-		width: 96px;
-		height: 96px;
+		width: 104px;
+		height: 104px;
 		flex-shrink: 0;
 		border-radius: 999px;
-		box-shadow: var(--box-shadow);
+		border: 1px solid var(--border);
+		box-shadow: 0 0 0 1px var(--border), 0 0 32px rgba(var(--glow), 0.35);
 	}
-	.bio h1 {
+	.title {
 		margin: 0 0 0.15em;
-		font-size: 2.2rem;
+		font-size: 2.6rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		filter: drop-shadow(0 0 24px rgba(var(--glow), 0.35));
 	}
 	.role {
 		margin: 0 0 0.25em;
-		font-size: 0.9rem;
-		letter-spacing: 0.08em;
+		font-size: 0.8rem;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--accent);
-		font-weight: 600;
+		font-weight: 700;
 	}
 	.tagline {
-		margin: 0;
+		margin: 0 0 0.6em;
 		color: rgb(var(--gray));
+	}
+	.term {
+		margin: 0;
+		display: inline-block;
+		padding: 0.35em 0.9em;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--page-bg) 70%, transparent);
+		font-family: 'Courier New', monospace;
+		font-size: 0.82rem;
+		color: rgb(var(--gray));
+	}
+	.term .cmd {
+		color: var(--accent);
+		font-weight: 700;
 	}
 	.section-title {
 		margin: 0 0 0.5em;
@@ -114,13 +140,17 @@ const fmtDate = (d: Date) =>
 		display: flex;
 		align-items: baseline;
 		gap: 1.5em;
-		padding: 0.9em 0.2em;
+		padding: 0.9em 0.3em;
+		border-radius: 8px;
 		text-decoration: none;
 		color: rgb(var(--black));
-		transition: 0.15s ease;
+		transition: 0.2s ease;
 	}
 	.posts a:hover {
 		color: var(--accent);
+		background: color-mix(in srgb, var(--glow) 7%, transparent);
+		padding-left: 0.7em;
+		box-shadow: 0 0 24px rgba(var(--glow), 0.12);
 	}
 	.posts time {
 		flex-shrink: 0;
@@ -140,17 +170,36 @@ const fmtDate = (d: Date) =>
 		margin-top: 2em;
 	}
 	.feed a {
+		display: inline-block;
+		padding: 0.5em 1.2em;
+		border-radius: 999px;
+		background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+		color: #fff;
+		font-size: 0.9rem;
+		font-weight: 600;
 		text-decoration: none;
-		font-size: 0.95rem;
+		box-shadow: 0 4px 20px rgba(var(--glow), 0.4);
+		transition: 0.2s ease;
 	}
 	.feed a:hover {
-		text-decoration: underline;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 28px rgba(var(--glow), 0.55);
+	}
+	@keyframes fadeUp {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
 	}
 	@media (max-width: 720px) {
 		.bio {
 			flex-direction: column;
 			text-align: center;
-			gap: 0.75em;
+			gap: 1em;
 		}
 		.posts a {
 			flex-direction: column;

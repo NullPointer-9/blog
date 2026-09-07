@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 
 <header>
 	<nav>
-		<a class="brand" href={base}>NullPointer-9</a>
+		<a class="brand text-gradient" href={base}>NullPointer-9</a>
 		<div class="links">
 			<HeaderLink href={base}>Blog</HeaderLink>
 			<HeaderLink href={`${base}about`}>Sobre</HeaderLink>
@@ -19,9 +19,14 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 </header>
 <style>
 	header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
 		padding: 0 1em;
 		border-bottom: 1px solid var(--border);
-		background: transparent;
+		background: color-mix(in srgb, var(--page-bg) 72%, transparent);
+		-webkit-backdrop-filter: blur(10px);
+		backdrop-filter: blur(10px);
 	}
 	nav {
 		display: flex;
@@ -35,11 +40,7 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 	.brand {
 		font-weight: 700;
 		font-size: 1.05rem;
-		color: rgb(var(--black));
 		text-decoration: none;
-	}
-	.brand:hover {
-		color: var(--accent);
 	}
 	.links {
 		display: flex;
