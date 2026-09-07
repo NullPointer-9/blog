@@ -37,9 +37,9 @@ const fmtDate = (d: Date) =>
 					<h1 class="title text-gradient">NullPointer-9</h1>
 					<p class="role">Desenvolvedor Web</p>
 					<p class="tagline">{SITE_DESCRIPTION}</p>
-					<p class="term">
-						<span class="cmd">$</span> echo &quot;olá, universo&quot;
-					</p>
+<p class="term">
+					<span class="cmd">$</span> echo &quot;olá, universo&quot;<span class="cursor">&#9608;</span>
+				</p>
 				</div>
 			</section>
 			<section>
@@ -83,16 +83,15 @@ const fmtDate = (d: Date) =>
 		width: 104px;
 		height: 104px;
 		flex-shrink: 0;
-		border-radius: 999px;
+		border-radius: 50%;
 		border: 1px solid var(--border);
-		box-shadow: 0 0 0 1px var(--border), 0 0 32px rgba(var(--glow), 0.35);
+		box-shadow: 0 0 0 1px var(--border), 0 0 32px rgba(var(--glow), 0.22);
 	}
 	.title {
 		margin: 0 0 0.15em;
 		font-size: 2.6rem;
-		font-weight: 800;
+		font-weight: 700;
 		letter-spacing: -0.02em;
-		filter: drop-shadow(0 0 24px rgba(var(--glow), 0.35));
 	}
 	.role {
 		margin: 0 0 0.25em;
@@ -111,15 +110,26 @@ const fmtDate = (d: Date) =>
 		display: inline-block;
 		padding: 0.35em 0.9em;
 		border: 1px solid var(--border);
-		border-radius: 8px;
+		border-radius: 2px;
 		background: color-mix(in srgb, var(--page-bg) 70%, transparent);
-		font-family: 'Courier New', monospace;
+		font-family: var(--font-mono), 'Courier New', monospace;
 		font-size: 0.82rem;
 		color: rgb(var(--gray));
 	}
 	.term .cmd {
 		color: var(--accent);
 		font-weight: 700;
+	}
+	.term .cursor {
+		display: inline-block;
+		margin-left: 0.15em;
+		color: var(--accent);
+		animation: blink 1s steps(1) infinite;
+	}
+	@keyframes blink {
+		50% {
+			opacity: 0;
+		}
 	}
 	.section-title {
 		margin: 0 0 0.5em;
@@ -150,7 +160,7 @@ const fmtDate = (d: Date) =>
 		color: var(--accent);
 		background: color-mix(in srgb, var(--glow) 7%, transparent);
 		padding-left: 0.7em;
-		box-shadow: 0 0 24px rgba(var(--glow), 0.12);
+		box-shadow: 0 0 24px rgba(var(--glow), 0.1);
 	}
 	.posts time {
 		flex-shrink: 0;
@@ -172,18 +182,21 @@ const fmtDate = (d: Date) =>
 	.feed a {
 		display: inline-block;
 		padding: 0.5em 1.2em;
-		border-radius: 999px;
-		background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-		color: #fff;
-		font-size: 0.9rem;
-		font-weight: 600;
+		border: 1px solid rgb(var(--gray));
+		border-radius: 0;
+		background: transparent;
+		color: rgb(var(--black));
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 		text-decoration: none;
-		box-shadow: 0 4px 20px rgba(var(--glow), 0.4);
 		transition: 0.2s ease;
 	}
 	.feed a:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 28px rgba(var(--glow), 0.55);
+		background: rgb(var(--black));
+		color: var(--page-bg);
+		box-shadow: 0 0 24px rgba(var(--glow), 0.25);
 	}
 	@keyframes fadeUp {
 		from {

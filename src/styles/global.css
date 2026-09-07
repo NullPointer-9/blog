@@ -5,49 +5,50 @@
  */
 
 :root {
-	--accent: #7c3aed;
-	--accent-dark: #4c1d95;
-	--glow: 124, 58, 237;
-	--black: 15, 12, 26;
-	--gray: 112, 111, 152;
-	--gray-light: 229, 229, 241;
-	--gray-dark: 39, 32, 58;
-	--page-bg: #fbfaff;
-	--surface: #f6f4fd;
-	--border: rgba(96, 84, 168, 0.2);
+	--accent: #000000;
+	--accent-dark: #3a3a3a;
+	--glow: 0, 0, 0;
+	--black: 10, 10, 10;
+	--gray: 92, 92, 92;
+	--gray-light: 228, 228, 228;
+	--gray-dark: 26, 26, 26;
+	--page-bg: #ffffff;
+	--surface: #f7f7f7;
+	--border: rgba(0, 0, 0, 0.15);
 	--gray-gradient: rgba(var(--gray-light), 55%), var(--page-bg);
-	--bg-glow: radial-gradient(1100px 480px at 50% -8%, rgba(var(--glow), 0.16), transparent 60%);
-	--bg-grid1: none;
-	--bg-grid2: none;
+	--bg-glow: radial-gradient(1100px 480px at 50% -8%, rgba(var(--glow), 0.06), transparent 60%);
+	--bg-grid1: linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+	--bg-grid2: linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
 	color-scheme: light;
 }
 :root[data-theme='dark'] {
-	--accent: #8b5cf6;
-	--accent-dark: #a78bfa;
-	--glow: 139, 92, 246;
-	--black: 240, 236, 252;
-	--gray: 150, 145, 187;
-	--gray-light: 41, 34, 64;
-	--gray-dark: 226, 222, 240;
-	--page-bg: #0a0813;
-	--surface: #100d1e;
-	--border: rgba(155, 140, 230, 0.16);
-	--gray-gradient: rgba(var(--gray-light), 42%), var(--page-bg) 55%;
-	--bg-grid1: linear-gradient(rgba(150, 140, 220, 0.05) 1px, transparent 1px);
-	--bg-grid2: linear-gradient(90deg, rgba(150, 140, 220, 0.05) 1px, transparent 1px);
+	--accent: #ffffff;
+	--accent-dark: #b5b5b5;
+	--glow: 255, 255, 255;
+	--black: 240, 240, 240;
+	--gray: 128, 128, 128;
+	--gray-light: 24, 24, 24;
+	--gray-dark: 220, 220, 220;
+	--page-bg: #0a0a0a;
+	--surface: #111111;
+	--border: rgba(255, 255, 255, 0.14);
+	--gray-gradient: rgba(var(--gray-light), 55%), var(--page-bg) 55%;
+	--bg-glow: radial-gradient(1100px 480px at 50% -8%, rgba(var(--glow), 0.07), transparent 60%);
+	--bg-grid1: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	--bg-grid2: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 	--box-shadow:
-		0 2px 6px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5),
-		0 16px 32px rgba(0, 0, 0, 0.5);
+		0 2px 6px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.55),
+		0 16px 32px rgba(0, 0, 0, 0.55);
 	color-scheme: dark;
 }
 html {
 	background-color: var(--page-bg);
 }
 body {
-	font-family: var(--font-atkinson);
+	font-family: var(--font-mono), 'Courier New', monospace;
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -64,10 +65,11 @@ body {
 	-webkit-text-size-adjust: 100%;
 }
 ::selection {
-	background: rgba(var(--glow), 0.35);
+	background: rgb(var(--black));
+	color: var(--page-bg);
 }
 .text-gradient {
-	background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+	background: linear-gradient(90deg, rgb(var(--black)), rgb(var(--gray)));
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
