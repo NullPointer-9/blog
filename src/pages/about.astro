@@ -6,52 +6,151 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 	: import.meta.env.BASE_URL + '/';
 
 const techs = [
-	['docker', 'E650', 'Docker'],
-	['git', 'E5FB', 'Git'],
-	['github', 'F09B', 'GitHub'],
-	['bash', 'E760', 'Bash / Shell'],
-	['linux', 'E712', 'Linux'],
-	['js', 'E60C', 'JavaScript'],
-	['ts', 'E628', 'TypeScript'],
-	['csharp', 'E7B2', 'C#'],
-	['vue', 'E6A0', 'Vue'],
-	['react', 'E625', 'React'],
-	['node', 'E718', 'Node.js'],
-	['python', 'E235', 'Python'],
-	['astro', 'E6B3', 'Astro'],
-	['html', 'E60E', 'HTML'],
-	['css', 'E614', 'CSS'],
-	['mysql', 'E229', 'MySQL'],
-	['postgres', 'E76E', 'PostgreSQL'],
-	['redis', 'E76D', 'Redis'],
-	['sql', null, 'SQL'],
+	['docker', 'E650', 'Docker', 92],
+	['git', 'E5FB', 'Git', 95],
+	['github', 'F09B', 'GitHub', 90],
+	['bash', 'E760', 'Bash / Shell', 88],
+	['linux', 'E712', 'Linux', 86],
+	['js', 'E60C', 'JavaScript', 84],
+	['ts', 'E628', 'TypeScript', 80],
+	['csharp', 'E7B2', 'C#', 82],
+	['vue', 'E6A0', 'Vue', 78],
+	['react', 'E625', 'React', 76],
+	['node', 'E718', 'Node.js', 85],
+	['python', 'E235', 'Python', 74],
+	['astro', 'E6B3', 'Astro', 88],
+	['html', 'E60E', 'HTML', 95],
+	['css', 'E614', 'CSS', 83],
+	['mysql', 'E229', 'MySQL', 80],
+	['postgres', 'E76E', 'PostgreSQL', 78],
+	['redis', 'E76D', 'Redis', 70],
+	['sql', null, 'SQL', 85],
 ];
 
+const gly = (h) => (h ? String.fromCodePoint(parseInt(h, 16)) : '');
+const bar = (p) => '\u2588'.repeat(Math.floor(p / 10)) + '\u2591'.repeat(10 - Math.floor(p / 10));
+const barFull = (p) => '\u2588'.repeat(Math.floor(p / 10));
+const barEmpty = (p) => '\u2591'.repeat(10 - Math.floor(p / 10));
+
 const mid = (techs.length - 1) / 2;
+const views = ['leque', 'nuvem', 'skills', 'neofetch', 'ticker'];
 ---
 
 <Layout title="Sobre mim" description="Quem sou eu e sobre o que escrevo neste blog">
-	<div slot="top" class="who">
-		<img class="avatar" src={`${base}favicon.svg`} alt="Avatar NullPointer-9" width="92" height="92" />
-		<ul class="deck">
+	<div slot="top" class="tech" id="tech" data-mode="neofetch">
+		<img class="avatar-top" src={`${base}favicon.svg`} alt="Avatar NullPointer-9" width="92" height="92" />
+		<div class="switcher" role="group" aria-label="Forma de exibir as tecnologias">
 			{
-				techs.map((t, i) => {
-					const d = Math.abs(i - mid);
-					const r = ((i - mid) * 3).toFixed(2);
-					const y = (d * -1.6).toFixed(1);
-					return (
-						<li
-							class={t[1] ? 'cd' : 'cd void'}
-							title={t[2]}
-							style={`transform-origin: bottom center; --r:${r}deg; --y:${y}px; z-index:${d};`}
-						>
-							{t[1] && <span class="ico">{String.fromCodePoint(parseInt(t[1], 16))}</span>}
-							<span class="nm">{t[0]}</span>
-						</li>
-					);
-				})
+				views.map((v) => (
+					<button type="button" data-view={v}>
+						{v}
+					</button>
+				))
 			}
-		</ul>
+		</div>
+
+		<div class="views">
+			<div class="view view-leque">
+				<ul class="deck">
+					{
+						techs.map((t, i) => {
+							const d = Math.abs(i - mid);
+							const r = ((i - mid) * 3).toFixed(2);
+							const y = (d * -1.6).toFixed(1);
+							return (
+								<li
+									class={t[1] ? 'cd' : 'cd void'}
+									title={t[2]}
+									style={`transform-origin: bottom center; --r:${r}deg; --y:${y}px; z-index:${d};`}
+								>
+									{t[1] && <span class="ico">{gly(t[1])}</span>}
+									<span class="nm">{t[0]}</span>
+								</li>
+							);
+						})
+					}
+				</ul>
+			</div>
+
+			<div class="view view-nuvem">
+				<ul class="cloud">
+					{
+						techs.map((t) => (
+							<li
+								class={t[1] ? `chip c${Math.max(1, Math.min(4, Math.ceil((100 - t[3]) / 12)))}` : 'chip c2'}
+								title={`${t[2]} · ${t[3]}%`}
+							>
+								{t[1] && <span class="ico">{gly(t[1])}</span>}
+								<span class="nm">{t[0]}</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="view view-skills">
+				<ol class="skills">
+					{
+						techs.map((t) => (
+							<li class="row">
+								<span class="s-ico">{gly(t[1])}</span>
+								<span class="s-nm">{t[0]}</span>
+								<span class="s-bar">
+									<span class="s-full">{bar(t[3]).replaceAll('\u2591', '')}</span>
+									<span class="s-empty">{'\u2591'.repeat(10 - Math.floor(t[3] / 10))}</span>
+								</span>
+								<span class="s-pct">{t[3]}%</span>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+
+			<div class="view view-neofetch">
+				<div class="term">
+					<div class="term-bar">
+						<span>nullpointer@blog:~$ neofetch</span>
+						<span class="dots">&#x25CF;&#x25CF;&#x25CF;</span>
+					</div>
+					<div class="term-body">
+						<div class="nf-art">
+							<img src={`${base}favicon.svg`} alt="Tux" width="108" height="108" />
+						</div>
+						<ul class="nf-lines">
+							{
+								techs.map((t) => (
+									<li class="nf-row">
+										<span class="ico">{gly(t[1])}</span>
+										<span class="nm">{t[0]}</span>
+										<span class="bar">
+											<span class="bar-full">{barFull(t[3])}</span>
+											<span class="bar-empty">{barEmpty(t[3])}</span>
+										</span>
+										<span class="pct">{t[3]}%</span>
+									</li>
+								))
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="view view-ticker">
+				<div class="ticker" aria-hidden="false">
+					<div class="ticker-track">
+						{
+							[...techs, ...techs].map((t, i) => (
+								<span class="tk-item" key={i}>
+									<span class="ico">{gly(t[1])}</span>
+									<span class="nm">{t[0]}</span>
+									<span class="tk-sep">║</span>
+								</span>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<p>
@@ -76,17 +175,39 @@ const mid = (techs.length - 1) / 2;
 		Se quiser conversar ou trocar uma ideia, pode me encontrar no GitHub:{' '}
 		<a href="https://github.com/NullPointer-9">@NullPointer-9</a>.
 	</p>
+
+	<script is:inline>
+		(function () {
+			const box = document.getElementById('tech');
+			if (!box) return;
+			const KEY = 'techStyle';
+			const views = ['leque', 'nuvem', 'skills', 'neofetch', 'ticker'];
+			try {
+				const saved = localStorage.getItem(KEY);
+				if (saved && views.includes(saved)) box.dataset.mode = saved;
+			} catch {}
+			box.addEventListener('click', (e) => {
+				const btn = e.target.closest('[data-view]');
+				if (!btn) return;
+				const v = btn.dataset.view;
+				box.dataset.mode = v;
+				try {
+					localStorage.setItem(KEY, v);
+				} catch {}
+			});
+		})();
+	</script>
 </Layout>
 
 <style>
-	.who {
+	.tech {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 1.5em;
+		gap: 1.4em;
 		margin-bottom: 1.8em;
 	}
-	.avatar {
+	.avatar-top {
 		width: 92px;
 		height: 92px;
 		border-radius: 50%;
@@ -95,6 +216,61 @@ const mid = (techs.length - 1) / 2;
 			0 0 0 1px var(--border),
 			0 0 32px rgba(var(--glow), 0.25);
 	}
+
+	.view {
+		display: none;
+	}
+	.views {
+		width: 100%;
+	}
+	.tech[data-mode='leque'] .view-leque,
+	.tech[data-mode='nuvem'] .view-nuvem,
+	.tech[data-mode='skills'] .view-skills,
+	.tech[data-mode='neofetch'] .view-neofetch,
+	.tech[data-mode='ticker'] .view-ticker {
+		display: block;
+	}
+	.tech[data-mode='neofetch'] .avatar-top {
+		display: none;
+	}
+
+	.switcher {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 0.5em;
+	}
+	.switcher button {
+		font-family: inherit;
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(var(--gray));
+		background: transparent;
+		border: 1px solid var(--border);
+		border-radius: 2px;
+		padding: 0.4em 0.8em;
+		cursor: pointer;
+		transition:
+			background 0.18s ease,
+			color 0.18s ease,
+			border-color 0.18s ease;
+	}
+	.switcher button:hover {
+		color: rgb(var(--black));
+		border-color: rgb(var(--gray));
+	}
+	.tech[data-mode='leque'] .switcher [data-view='leque'],
+	.tech[data-mode='nuvem'] .switcher [data-view='nuvem'],
+	.tech[data-mode='skills'] .switcher [data-view='skills'],
+	.tech[data-mode='neofetch'] .switcher [data-view='neofetch'],
+	.tech[data-mode='ticker'] .switcher [data-view='ticker'] {
+		background: rgb(var(--black));
+		border-color: rgb(var(--black));
+		color: var(--page-bg);
+	}
+
+	/* ---- leque ---- */
 	.deck {
 		list-style: none;
 		margin: 0;
@@ -141,12 +317,12 @@ const mid = (techs.length - 1) / 2;
 		background: color-mix(in srgb, rgb(var(--glow)) 14%, transparent);
 		outline: none;
 	}
-	.ico {
+	.cd .ico {
 		font-size: 1.55rem;
 		line-height: 1.1;
 		color: rgb(var(--gray-dark));
 	}
-	.nm {
+	.cd .nm {
 		font-size: 0.56rem;
 		letter-spacing: 0.09em;
 		text-transform: uppercase;
@@ -158,6 +334,252 @@ const mid = (techs.length - 1) / 2;
 		font-weight: 700;
 	}
 
+	/* ---- nuvem ---- */
+	.cloud {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: baseline;
+		gap: 0.8em 1.4em;
+		max-width: 90%;
+	}
+	.cloud li {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.35em;
+		color: rgb(var(--gray));
+		transition: color 0.18s ease;
+	}
+	.cloud li:hover {
+		color: var(--accent);
+	}
+	.cloud .ico {
+		line-height: 1;
+	}
+	.cloud .nm {
+		text-transform: uppercase;
+	}
+	.cloud li.c1 {
+		font-size: 1.35rem;
+		color: rgb(var(--black));
+	}
+	.cloud li.c1:hover {
+		color: rgb(var(--gray));
+	}
+	.cloud li.c2 {
+		font-size: 1.1rem;
+	}
+	.cloud li.c3 {
+		font-size: 0.95rem;
+	}
+	.cloud li.c4 {
+		font-size: 0.82rem;
+		color: rgb(var(--gray-light));
+	}
+	.cloud li.c4:hover {
+		color: rgb(var(--black));
+	}
+
+	/* ---- skills ---- */
+	.skills {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		max-width: 480px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55em;
+	}
+	.row {
+		display: flex;
+		align-items: center;
+		gap: 0.8em;
+		font-size: 0.95rem;
+	}
+	.s-ico {
+		flex: none;
+		width: 1.5em;
+		text-align: center;
+		color: rgb(var(--gray-dark));
+	}
+	.s-nm {
+		flex: none;
+		width: 8.5ch;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: rgb(var(--gray));
+		text-transform: lowercase;
+	}
+	.s-bar {
+		flex: 1;
+		display: flex;
+		overflow: hidden;
+		font-size: 0.9rem;
+	}
+	.s-full {
+		color: var(--accent);
+	}
+	.s-empty {
+		color: color-mix(in srgb, rgb(var(--glow)) 18%, transparent);
+	}
+	.s-pct {
+		flex: none;
+		width: 3ch;
+		text-align: right;
+		color: rgb(var(--gray));
+		font-size: 0.8rem;
+	}
+
+	/* ---- neofetch ---- */
+	.term {
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		overflow: hidden;
+		max-width: 620px;
+		width: 100%;
+		background: color-mix(in srgb, rgb(var(--glow)) 4%, transparent);
+		box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+	}
+	.term-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.55em 0.9em;
+		border-bottom: 1px solid var(--border);
+		font-size: 0.78rem;
+		color: rgb(var(--gray));
+	}
+	.term-bar .dots {
+		color: color-mix(in srgb, rgb(var(--glow)) 30%, transparent);
+		letter-spacing: 0.3em;
+	}
+	.term-body {
+		display: flex;
+		gap: 1.4em;
+		padding: 1.1em 1.2em;
+		align-items: flex-start;
+	}
+	.nf-art img {
+		display: block;
+		width: 108px;
+		height: 108px;
+		border-radius: 4px;
+		border: 1px solid var(--border);
+		box-shadow: 0 0 24px rgba(var(--glow), 0.18);
+	}
+	.nf-lines {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.34em;
+		flex: 1;
+	}
+	.nf-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6em;
+		font-size: 0.86rem;
+	}
+	.nf-row .ico {
+		flex: none;
+		width: 1.4em;
+		text-align: center;
+		color: rgb(var(--gray-dark));
+	}
+	.nf-row .nm {
+		flex: none;
+		width: 11ch;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: rgb(var(--gray));
+	}
+	.nf-row .bar {
+		flex: 1;
+		font-size: 0.82rem;
+		white-space: nowrap;
+		display: flex;
+	}
+	.nf-row .bar-full {
+		color: var(--accent);
+	}
+	.nf-row .bar-empty {
+		color: color-mix(in srgb, rgb(var(--glow)) 18%, transparent);
+	}
+	.nf-row .pct {
+		flex: none;
+		width: 3ch;
+		text-align: right;
+		color: rgb(var(--gray));
+		font-size: 0.78rem;
+	}
+
+	/* ---- ticker ---- */
+	.ticker {
+		overflow: hidden;
+		width: 100%;
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+	}
+	.view-ticker {
+		overflow: hidden;
+	}
+	.ticker-track {
+		display: inline-flex;
+		width: max-content;
+		animation: ticker 30s linear infinite;
+	}
+	.ticker:hover .ticker-track {
+		animation-play-state: paused;
+	}
+	.tk-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.7em;
+		padding-right: 1.6em;
+		font-size: 1rem;
+		color: rgb(var(--gray));
+	}
+	.tk-item .ico {
+		color: rgb(var(--gray-dark));
+	}
+	.tk-sep {
+		padding-left: 1.6em;
+		color: color-mix(in srgb, rgb(var(--glow)) 35%, transparent);
+	}
+	@keyframes ticker {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ticker-track {
+			animation: none;
+		}
+	}
+
+	@media (max-width: 660px) {
+		.term-body {
+			flex-direction: column;
+			align-items: center;
+		}
+		.nf-lines {
+			width: 100%;
+		}
+		.s-nm {
+			width: 7ch;
+		}
+	}
 	@media (max-width: 1060px) {
 		.deck {
 			flex-wrap: wrap;
@@ -171,16 +593,13 @@ const mid = (techs.length - 1) / 2;
 		}
 	}
 	@media (max-width: 560px) {
-		.avatar {
-			width: 84px;
-			height: 84px;
-		}
 		.deck {
 			gap: 0.5em;
 		}
 		.cd {
 			width: 88px;
 			height: 120px;
+			transform: none;
 		}
 	}
 </style>
