@@ -147,20 +147,40 @@ const fmtDate = (d: Date) =>
 		border-bottom: none;
 	}
 	.posts a {
+		position: relative;
 		display: flex;
 		align-items: baseline;
 		gap: 1.5em;
-		padding: 0.9em 0.3em;
-		border-radius: 8px;
+		padding: 0.9em 0.9em;
+		border-radius: 4px;
 		text-decoration: none;
 		color: rgb(var(--black));
-		transition: 0.2s ease;
+		transition:
+			background 0.2s ease,
+			color 0.2s ease;
+	}
+	.posts a::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 50%;
+		width: 3px;
+		height: 0;
+		border-radius: 2px;
+		background: var(--accent);
+		opacity: 0;
+		transform: translateY(-50%);
+		transition:
+			height 0.2s ease,
+			opacity 0.2s ease;
 	}
 	.posts a:hover {
 		color: var(--accent);
-		background: color-mix(in srgb, var(--glow) 7%, transparent);
-		padding-left: 0.7em;
-		box-shadow: 0 0 24px rgba(var(--glow), 0.1);
+		background: color-mix(in srgb, rgb(var(--glow)) 5%, transparent);
+	}
+	.posts a:hover::before {
+		opacity: 1;
+		height: 1.3em;
 	}
 	.posts time {
 		flex-shrink: 0;
@@ -196,7 +216,6 @@ const fmtDate = (d: Date) =>
 	.feed a:hover {
 		background: rgb(var(--black));
 		color: var(--page-bg);
-		box-shadow: 0 0 24px rgba(var(--glow), 0.25);
 	}
 	@keyframes fadeUp {
 		from {
