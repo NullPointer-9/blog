@@ -27,29 +27,15 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 	</nav>
 </header>
 
-<script>
-	const nav = document.getElementById('nav');
-	const apply = () => nav.classList.toggle('up', window.scrollY > 4);
-	apply();
-	window.addEventListener('scroll', apply, { passive: true });
-</script>
-
 <style>
 	header {
 		position: sticky;
 		top: 0;
 		z-index: 10;
-		border-bottom: 1px solid transparent;
-		transition:
-			background 0.25s ease,
-			border-color 0.25s ease,
-			backdrop-filter 0.25s ease;
-	}
-	header.up {
+		border-bottom: 1px solid var(--border);
 		background: color-mix(in srgb, var(--page-bg) 82%, transparent);
 		-webkit-backdrop-filter: blur(24px) saturate(180%);
 		backdrop-filter: blur(24px) saturate(180%);
-		border-bottom-color: var(--border);
 	}
 	nav {
 		display: flex;
