@@ -22,6 +22,7 @@ const { title, description } = Astro.props;
 		<Header />
 		<main class="page">
 			<article>
+				<slot name="top" />
 				<p class="page-cmd">$ cat {title.replace(/\s+/g, '-').toLowerCase()}.txt</p>
 				<h1>{title}</h1>
 				<hr class="page-div" />

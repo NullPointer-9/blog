@@ -1,8 +1,37 @@
 ---
 import Layout from '../layouts/Page.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/')
+	? import.meta.env.BASE_URL
+	: import.meta.env.BASE_URL + '/';
 ---
 
 <Layout title="Sobre mim" description="Quem sou eu e sobre o que escrevo neste blog">
+	<div slot="top" class="who">
+		<img class="avatar" src={`${base}favicon.svg`} alt="Avatar NullPointer-9" width="104" height="104" />
+		<ul class="badges">
+			<li title="Docker"><span class="ico">&#xE650;</span><span class="nm">docker</span></li>
+			<li title="Git"><span class="ico">&#xE5FB;</span><span class="nm">git</span></li>
+			<li title="GitHub"><span class="ico">&#xF09B;</span><span class="nm">github</span></li>
+			<li title="Bash / Shell"><span class="ico">&#xE760;</span><span class="nm">bash</span></li>
+			<li title="Linux"><span class="ico">&#xE712;</span><span class="nm">linux</span></li>
+			<li title="JavaScript"><span class="ico">&#xE60C;</span><span class="nm">js</span></li>
+			<li title="TypeScript"><span class="ico">&#xE628;</span><span class="nm">ts</span></li>
+			<li title="C#"><span class="ico">&#xE7B2;</span><span class="nm">c#</span></li>
+			<li title="Vue"><span class="ico">&#xE6A0;</span><span class="nm">vue</span></li>
+			<li title="React"><span class="ico">&#xE625;</span><span class="nm">react</span></li>
+			<li title="Node.js"><span class="ico">&#xE718;</span><span class="nm">node</span></li>
+			<li title="Python"><span class="ico">&#xE235;</span><span class="nm">python</span></li>
+			<li title="Astro"><span class="ico">&#xE6B3;</span><span class="nm">astro</span></li>
+			<li title="HTML"><span class="ico">&#xE60E;</span><span class="nm">html</span></li>
+			<li title="CSS"><span class="ico">&#xE614;</span><span class="nm">css</span></li>
+			<li title="MySQL"><span class="ico">&#xE229;</span><span class="nm">mysql</span></li>
+			<li title="PostgreSQL"><span class="ico">&#xE76E;</span><span class="nm">postgres</span></li>
+			<li title="Redis"><span class="ico">&#xE76D;</span><span class="nm">redis</span></li>
+			<li class="sql" title="SQL"><span class="nm">sql</span></li>
+		</ul>
+	</div>
+
 	<p>
 		Olá! Sou o <strong>NullPointer-9</strong>, desenvolvedor e entusiasta de tecnologia. Criei este
 		blog para compartilhar o que aprendo no dia a dia: programação, novas ferramentas, projetos
@@ -26,3 +55,86 @@ import Layout from '../layouts/Page.astro';
 		<a href="https://github.com/NullPointer-9">@NullPointer-9</a>.
 	</p>
 </Layout>
+
+<style>
+	.who {
+		display: flex;
+		align-items: center;
+		gap: 1.6em;
+		margin-bottom: 1.8em;
+	}
+	.avatar {
+		flex: none;
+		width: 104px;
+		height: 104px;
+		border-radius: 50%;
+		border: 1px solid var(--border);
+		box-shadow:
+			0 0 0 1px var(--border),
+			0 0 32px rgba(var(--glow), 0.25);
+	}
+	.badges {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+		gap: 0.6em;
+		flex: 1;
+	}
+	.badges li {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.2em;
+		padding: 0.7em 0.2em;
+		border: 1px solid var(--border);
+		border-radius: 3px;
+		background: color-mix(in srgb, rgb(var(--glow)) 3%, transparent);
+		transition:
+			background 0.18s ease,
+			color 0.18s ease,
+			border-color 0.18s ease;
+	}
+	.badges li:hover {
+		background: rgb(var(--black));
+		border-color: rgb(var(--black));
+	}
+	.ico {
+		font-size: 1.55rem;
+		line-height: 1;
+		color: rgb(var(--gray-dark));
+		transition: color 0.18s ease;
+	}
+	.nm {
+		font-size: 0.58rem;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+		color: rgb(var(--gray));
+		transition: color 0.18s ease;
+	}
+	.badges li:hover .ico,
+	.badges li:hover .nm {
+		color: var(--page-bg);
+	}
+	.badges li.sql {
+		padding: 0.95em 0.2em;
+	}
+	.badges li.sql .nm {
+		font-size: 0.72rem;
+		font-weight: 700;
+	}
+
+	@media (max-width: 560px) {
+		.who {
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+		}
+		.badges {
+			width: 100%;
+			grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+		}
+	}
+</style>
